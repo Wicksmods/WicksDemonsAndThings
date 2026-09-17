@@ -1,0 +1,14 @@
+<Bindings xmlns="http://www.blizzard.com/wow/ui/">
+    <Binding name="WICKSDEMONS_TOGGLE_SOUL"  category="Wick's Demons and Things">
+        if WicksDemons and WicksDemons.SoulBar      then WicksDemons.SoulBar:Toggle()      end
+    </Binding>
+    <Binding name="WICKSDEMONS_TOGGLE_PET"   category="Wick's Demons and Things">
+        if WicksDemons and WicksDemons.PetBar       then WicksDemons.PetBar:Toggle()       end
+    </Binding>
+    <Binding name="WICKSDEMONS_TOGGLE_KIT"   category="Wick's Demons and Things">
+        if WicksDemons and WicksDemons.A and WicksDemons.A.kit then WicksDemons.A.kit:Toggle() end
+    </Binding>
+    <Binding name="WICKSDEMONS_TOGGLE_SHARD" category="Wick's Demons and Things">
+        if WicksDemons and WicksDemons.ShardCounter then WicksDemons.ShardCounter:Toggle() end
+    </Binding>
+</Bindings>

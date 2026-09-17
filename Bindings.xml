@@ -1,4 +1,4 @@
-<Bindings xmlns="http://www.blizzard.com/wow/ui/">
+<Bindings>
     <Binding name="WICKSDEMONS_TOGGLE_SOUL"  category="Wick's Demons and Things">
         if WicksDemons and WicksDemons.SoulBar      then WicksDemons.SoulBar:Toggle()      end
     </Binding>

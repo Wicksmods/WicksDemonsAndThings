@@ -13,4 +13,3 @@ SoulBar.lua
 PetBar.lua
 ShardCounter.lua
 UI.lua
-Bindings.xml

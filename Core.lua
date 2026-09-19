@@ -99,6 +99,8 @@ function A:OnInitialize()
         WD:Emit("PLAYER_TALENT_UPDATE")
     end)
 
+    Core.Cooldowns:New(self, { key = "cooldownBar" })
+
     Core.Kit:New(self, {
         racials = true,
         checklist = {
@@ -131,12 +133,15 @@ function A:OnEnable()
         end,
     })
 
+    if self.cooldowns then self.cooldowns:Init() end
+
     self:RegisterOptions(function(page, addon)
         local O = Core.Options
         local y = O:Heading(page, "Wick's Demons and Things", 0)
         y = O:Note(page, "Bars are configured in the panel (/wdt). Talents, checklist and racials live in the kit (/wdt kit).", y)
         y = O:Button(page, "Open panel", function() if WD.UI then WD.UI:Toggle() end end, y, 100)
         y = O:Button(page, "Open kit", function() addon.kit:Toggle() end, y, 100)
+        if addon.cooldowns then y = addon.cooldowns:OptionRow(page, y - 6) end
         y = O:ProfileSection(page, addon, y - 8)
     end)
 end
@@ -183,6 +188,7 @@ A:RegisterSlash(function(_, input)
 
     if input == "" then if WD.UI then WD.UI:Toggle() end return end
     if input == "kit" or input == "talents" or input == "checklist" then A.kit:Toggle() return end
+    if input == "cd" or input:match("^cd%s") then return A.cooldowns:Command(input:match("^%a+%s*(.*)$")) end
     if input == "help" or input == "?" then
         A:Print("commands")
         print("  /wdt             open options panel")

@@ -6,6 +6,7 @@
 local ADDON, ns = ...
 local WD = WicksDemons
 local D, R = WickCore.Dialect, WickCore.Restrict
+local Chrome = WickCore.Chrome
 
 WD.ShardCounter = {}
 local SC = WD.ShardCounter
@@ -107,7 +108,8 @@ local function build()
     f:SetClampedToScreen(true)
     f:RegisterForDrag("LeftButton")
     f:SetScript("OnDragStart", function(self)
-        if cfg.locked then return end
+        -- A lock stops a nudge, not a deliberate move: shift overrides it.
+        if not Chrome:DragAllowed(cfg.locked) then return end
         self:StartMoving()
     end)
     f:SetScript("OnDragStop", function(self)

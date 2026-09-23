@@ -5,6 +5,7 @@
 --   * Opened via bare /wdt; closed via × button.
 
 local ADDON, ns = ...
+if not WickCore then return end   -- said once in Core.lua
 local WD = WicksDemons
 
 WD.UI = {}

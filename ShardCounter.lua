@@ -4,6 +4,7 @@
 --   * Updates on BAG_UPDATE; tooltip shows total count.
 
 local ADDON, ns = ...
+if not WickCore then return end   -- said once in Core.lua
 local WD = WicksDemons
 local D, R = WickCore.Dialect, WickCore.Restrict
 local Chrome = WickCore.Chrome

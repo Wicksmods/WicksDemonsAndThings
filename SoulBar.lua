@@ -7,6 +7,7 @@
 --     warlock actually knows.
 
 local ADDON, ns = ...
+if not WickCore then return end   -- said once in Core.lua
 local WD = WicksDemons
 local D, R = WickCore.Dialect, WickCore.Restrict
 local Chrome = WickCore.Chrome

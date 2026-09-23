@@ -50,7 +50,7 @@ local PROFILE_DEFAULTS = {
 
 local A = Core:NewAddon("WicksDemonsAndThings", {
     title    = "Wick's Demons and Things",
-    version  = "1.0.0",
+    version  = "0.9.0",
     savedVar = "WicksDemonsSaved",
     defaults = { profile = PROFILE_DEFAULTS, char = {}, global = {} },
 })

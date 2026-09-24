@@ -6,6 +6,8 @@
 
 local ADDON, ns = ...
 if not WickCore then return end   -- said once in Core.lua
+local Chrome = WickCore.Chrome
+local C = Chrome.Colors
 local WD = WicksDemons
 
 WD.UI = {}
@@ -14,11 +16,11 @@ local UI = WD.UI
 -- ============================================================
 -- Wick brand palette
 -- ============================================================
-local C_BG          = { 0.051, 0.039, 0.078, 0.97 }
-local C_HEADER_BG   = { 0.090, 0.067, 0.141, 1 }
-local C_BORDER      = { 0.220, 0.188, 0.345, 1 }
-local C_GREEN       = { 0.310, 0.780, 0.471, 1 }
-local C_TEXT_NORMAL = { 0.831, 0.784, 0.631, 1 }
+local C_BG          = C.voidBG
+local C_HEADER_BG   = C.shadow
+local C_BORDER      = C.border
+local C_GREEN       = C.fel
+local C_TEXT_NORMAL = C.text
 local C_TEXT_DIM    = { 0.42, 0.35, 0.54, 1 }
 local C_BTN_BG      = { 0.130, 0.100, 0.180, 1 }
 local C_BTN_HOVER   = { 0.200, 0.150, 0.280, 1 }
@@ -34,6 +36,7 @@ local ROW_H   = 22
 -- ============================================================
 local function SetRGBA(tex, c)
     tex:SetColorTexture(c[1], c[2], c[3], c[4] or 1)
+    Chrome:Register(tex, c, "texture")
 end
 
 local function NewTexture(parent, layer, c)
@@ -45,7 +48,11 @@ end
 local function NewText(parent, size, c)
     local f = parent:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     f:SetFont("Fonts\\FRIZQT__.TTF", (size or 11) + 1, "")
-    if c then f:SetTextColor(c[1], c[2], c[3], c[4] or 1) end
+    if c then
+        f:SetTextColor(c[1], c[2], c[3], c[4] or 1)
+        -- Set once at build and never again, so Chrome has to know.
+        Chrome:Register(f, c, "text")
+    end
     return f
 end
 
@@ -54,6 +61,8 @@ local function AddBorder(frame, c)
     local function edge(p1, p2, w, h)
         local t = frame:CreateTexture(nil, "BORDER")
         t:SetColorTexture(c[1], c[2], c[3], c[4] or 1)
+        -- Drawn once and never again, so Chrome has to know about it.
+        Chrome:Register(t, c, "texture")
         t:SetPoint(p1); t:SetPoint(p2)
         if w then t:SetWidth(w) end
         if h then t:SetHeight(h) end

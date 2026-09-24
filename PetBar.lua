@@ -10,14 +10,15 @@ if not WickCore then return end   -- said once in Core.lua
 local WD = WicksDemons
 local D, R = WickCore.Dialect, WickCore.Restrict
 local Chrome = WickCore.Chrome
+local C = Chrome.Colors
 
 WD.PetBar = {}
 local PB = WD.PetBar
 
-local C_BG          = { 0.051, 0.039, 0.078, 0.92 }
-local C_BORDER      = { 0.220, 0.188, 0.345, 1 }
-local C_GREEN       = { 0.310, 0.780, 0.471, 1 }
-local C_TEXT_NORMAL = { 0.831, 0.784, 0.631, 1 }
+local C_BG          = C.voidBG
+local C_BORDER      = C.border
+local C_GREEN       = C.fel
+local C_TEXT_NORMAL = C.text
 local C_TEXT_DIM    = { 0.42, 0.35, 0.54, 1 }
 
 local ICON_SIZE = 32
@@ -50,7 +51,12 @@ local PETS = {
 -- ============================================================
 local function NewTexture(parent, layer, c)
     local t = parent:CreateTexture(nil, layer or "BACKGROUND")
-    if c then t:SetColorTexture(c[1], c[2], c[3], c[4] or 1) end
+    if c then
+        t:SetColorTexture(c[1], c[2], c[3], c[4] or 1)
+        -- Painted by us, so Chrome is told, or it repaints everything
+        -- but this on a theme change.
+        Chrome:Register(t, c, "texture")
+    end
     return t
 end
 
@@ -59,6 +65,8 @@ local function AddBorder(frame, c)
     local function edge(p1, p2, w, h)
         local t = frame:CreateTexture(nil, "BORDER")
         t:SetColorTexture(c[1], c[2], c[3], c[4] or 1)
+        -- Drawn once and never again, so Chrome has to know about it.
+        Chrome:Register(t, c, "texture")
         t:SetPoint(p1); t:SetPoint(p2)
         if w then t:SetWidth(w) end
         if h then t:SetHeight(h) end
